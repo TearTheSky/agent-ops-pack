@@ -35,8 +35,7 @@ mei-chan-ops-pack/
 ├── progress_tracking/          # 進捗管理システム
 ├── philosophy/                 # 学んだこと・改善点
 ├── retrospective/              # 反省会のやり方
-├── templates/                  # メッセージテンプレート
-└── materials/                  # 参考資料
+└── templates/                  # メッセージテンプレート
 ```
 
 ## 🚀 使い方（初めての方向け）

@@ -35,8 +35,7 @@ mei-chan-ops-pack/
 ├── progress_tracking/          # Progress management system
 ├── philosophy/                 # Lessons learned and improvements
 ├── retrospective/              # How to conduct retrospectives
-├── templates/                  # Message templates
-└── materials/                  # Reference materials
+└── templates/                  # Message templates
 ```
 
 ## 🚀 How to Use (For Beginners)
