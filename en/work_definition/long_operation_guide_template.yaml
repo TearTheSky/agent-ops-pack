@@ -1,0 +1,257 @@
+# Long Operation Guide Template
+# Template for Long-term Operational Work Procedures
+
+workflow:
+  name: "{WORKFLOW_NAME}"  # 例: "Module v1.0.0 Upgrade"
+  description: "{WORKFLOW_DESCRIPTION}"  # 例: "Upgrade microservices from module-name to v1.0.0"
+  environment: "{ENVIRONMENT}"  # 例: "production" or "development"
+  
+  configuration:
+    base_path: "{BASE_PATH}"  # 例: "/path/to/your-project/terraform/microservices"
+    script_path: "{SCRIPT_PATH}"  # 例: "/path/to/your-scripts/version-updater"
+    script_name: "{SCRIPT_NAME}"  # 例: "create_pull_request.sh"
+    environment: "{ENVIRONMENT}"  # Target environment
+    slack_user_id: "Required: Your Slack User ID for channel invitations and notifications"
+    
+  # IDE Terminal Workflow
+  ide_terminal_workflow:
+    description: "Handle IDE's tendency to move long-running scripts to background"
+    action: "Request user to move script to background after execution starts"
+    note: "Wait for user result report before proceeding"
+
+  # Environment Specific Checks
+  environment_specific_checks:
+    production_checks:
+      - "Don't run any actions without user's confirmation"
+      - "Verify development environment upgrade is completed"
+      - "Check production environment has required modules"
+      - "Notify team about production upgrade"
+      - "Verify backups are available"
+    
+    development_checks:
+      - "Check development environment has required modules"
+      - "Verify test environment is ready"
+
+  # Main Workflow Steps
+  steps:
+    - name: "Work Start Recording"
+      description: "Record start time for this operation"
+      action: "record_start_time"
+      command: "echo $(date '+%Y-%m-%d %H:%M:%S') > /tmp/{service}_{environment}_start_time.txt"
+      note: "CRITICAL: Always record start time before any operation"
+      
+    - name: "Prerequisite File Check"
+      description: "Check if target service uses required modules in target environment"
+      action: "check_file_exists"
+      command: "find {base_path}/{service}/{environment} -name '{module_file}'"
+      expected_pattern: "{service}/{environment}/{module_file}"
+      on_success: "proceed_to_next_step"
+      on_failure: "mark_as_skipped"
+      
+    - name: "Upgrade Execution"
+      description: "Execute upgrade script"
+      action: "run_script"
+      command: "{script_path}/{script_name} {base_path}/{service} {environment} {slack_user_id}"
+      timeout: "{SCRIPT_TIMEOUT}"  # 例: "30m"
+      ide_workflow: "Request user to move to background after script starts"
+      slack_user_id_parameter: "Required: Slack User ID for channel invitations and notifications"
+      on_success: "proceed_to_next_step"
+      on_failure: "mark_as_failed"
+      
+    - name: "CI Wait"
+      description: "Wait for CI completion with timeout"
+      action: "wait_ci"
+      timeout: "{ci_timeout}"
+      on_success: "proceed_to_next_step"
+      on_timeout: "proceed_anyway"  # Still post to Slack even if CI is pending
+      
+    - name: "Slack Post"
+      description: "Post PR review request to Slack"
+      action: "post_slack"
+      command: "{slack_command}"
+      message_template: |
+        {SLACK_MESSAGE_TEMPLATE}
+      on_success: "proceed_to_next_step"
+      on_failure: "log_error_continue"
+      
+    - name: "Work Completion Recording"
+      description: "Record end time and calculate duration"
+      action: "record_end_time"
+      command: |
+        echo $(date '+%Y-%m-%d %H:%M:%S') > /tmp/{service}_{environment}_end_time.txt
+        echo "Duration recorded" > /tmp/{service}_{environment}_duration.txt
+      note: "CRITICAL: Always record end time"
+      
+    - name: "Progress Recording"
+      description: "Generate progress tracking record with timing information"
+      action: "generate_progress_record"
+      format: "{PROGRESS_FORMAT}"  # 例: "Status	Dev PR	Prod PR	Memo"
+      output_format: "{OUTPUT_FORMAT}"  # 例: "tsv_without_header"
+      timing_information:
+        start_time_file: "/tmp/{service}_{environment}_start_time.txt"
+        end_time_file: "/tmp/{service}_{environment}_end_time.txt"
+        duration_file: "/tmp/{service}_{environment}_duration.txt"
+      rules:
+        status:
+          development_only_completed: "{DEV_ONLY_STATUS}"  # 例: "INPROGRESS"
+          both_dev_prod_completed: "{BOTH_COMPLETED_STATUS}"  # 例: "DONE"
+          skipped: "{SKIPPED_STATUS}"  # 例: "INPROGRESS"
+        dev_pr:
+          success: "{pr_url}"
+          skipped: ""
+          failed: ""
+        prod_pr:
+          always: ""  # Production PRs handled separately
+
+# Error Handling
+error_handling:
+  git_branch_conflict:
+    error: "Updates were rejected because the tip of your current branch is behind"
+    solution: "Delete remote branch → Delete local branch → Create new one"
+  
+  argument_format_error:
+    error: "first param(ms_dir) doesn't exist"
+    solution: "Specify with full path"
+  
+  ci_failure:
+    error: "CI failed, need fix"
+    solution: "Create fix PR and special handling"
+  
+  permission_system_error:
+    error: "panic: cannot find object"
+    solution: "Manual confirmation and re-execution"
+  
+  timing_error:
+    error: "Start time or end time file not found"
+    solution: "Manually record time"
+  
+  authentication_error:
+    error: "oauth2: \"invalid_grant\""
+    solution: "Authentication token update required"
+  
+  production_permission_error:
+    error: "Permission denied or insufficient permissions"
+    solution: "Apply for additional permission acquisition system for production environment"
+  
+  production_resource_limit_error:
+    error: "Quota exceeded or resource limit"
+    solution: "Check current usage and apply for quota increase"
+  
+  timeout_error:
+    error: "CI timeout or operation timeout"
+    solution: "Adjust timeout settings or continue manually"
+  
+  file_not_found:
+    error: "Required file not found"
+    solution: "Check file existence and consider alternatives"
+  
+  script_directory_error:
+    error: "Script executed from wrong directory"
+    solution: "Execute from correct directory"
+  
+  existing_branch_error:
+    error: "Branch already exists"
+    solution: "Check and delete existing branch"
+  
+  terminal_output_lost:
+    error: "Commands execute but no output displayed"
+    solution: "Create new shell session"
+  
+  script_silent_completion:
+    error: "Script completed without visible output"
+    solution: "Check actual results"
+  
+  slack_not_in_channel:
+    error: "Failed to post message: not_in_channel"
+    solution: "Check channel membership"
+  
+  cursor_background_issue:
+    error: "Script execution disappears from terminal"
+    solution: "Collaborative workflow with user"
+
+# Safety Measures
+safety_measures:
+  general_safety:
+    - "AI does not execute commands automatically"
+    - "Perform multiple confirmations before operations"
+    - "Conduct pre-investigation of impact scope"
+    - "Check existence and necessity of backup and rollback plans"
+    - "Execute step by step and confirm at each step"
+    - "Verify permissions"
+    - "Check dependencies"
+
+  environment_specific_safety:
+    development_safety:
+      - "Perform pre-testing in development environment"
+      - "Check CI/CD pipeline"
+      - "Confirm test environment preparation"
+      - "If environment-specific precautions and safety measures are needed, please extend here"
+    
+    production_safety:
+      - "Perform multiple confirmations before production environment operations"
+      - "Confirm completion in development environment"
+      - "Notify team in advance"
+      - "Confirm backups"
+      - "Prepare rollback plan"
+      - "If environment-specific precautions and safety measures are needed, please extend here"
+    
+    staging_safety:
+      - "Pre-testing in staging environment"
+      - "Check differences with production environment"
+      - "If environment-specific precautions and safety measures are needed, please extend here"
+
+  specific_safety_measures:
+    permission_system_safety:
+      - "Apply for permission acquisition system within appropriate scope"
+      - "Request only minimum necessary permissions"
+      - "Check permission expiration"
+    
+    confirmation_prompts:
+      - "Confirmation prompt before each deletion operation"
+      - "User confirmation before important changes"
+      - "Confirmation at each step during staged execution"
+    
+    staged_execution:
+      - "Staged execution and verification"
+      - "Result confirmation at each step"
+      - "Immediate stop when problems occur"
+    
+    rollback_preparation:
+      - "Prepare rollback procedures in advance"
+      - "Check permissions required for rollback"
+      - "Practice rollback execution"
+
+# Success Criteria
+success_criteria:
+  - "PR is created successfully"
+  - "CI succeeds"
+  - "Slack post succeeds"
+  - "Progress is recorded correctly"
+  - "Start time, end time, and duration are recorded correctly"
+  - "No errors occur"
+
+# Monitoring and Reporting
+monitoring:
+  progress_tracking:
+    format: "{PROGRESS_FORMAT}"  # 例: "TSV"
+    fields:
+      - "service"
+      - "environment"
+      - "status"
+      - "dev_pr"
+      - "prod_pr"
+      - "memo"
+
+# Customization Guide
+customization_guide:
+  required_placeholders:
+    - "{WORKFLOW_NAME}: Workflow name"
+    - "{ENVIRONMENT}: Target environment"
+    - "{BASE_PATH}: Base path"
+    - "{SCRIPT_PATH}: Script path"
+    - "{MODULE_FILE}: Module file name"
+  
+  customization_tips:
+    - "Adjust to project-specific settings"
+    - "Check security requirements"
+    - "Customize to match team workflow"

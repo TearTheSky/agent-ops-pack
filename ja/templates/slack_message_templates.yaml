@@ -1,0 +1,226 @@
+# Slack Message Templates
+# Slack投稿用メッセージテンプレート
+
+templates:
+  pr_review_request:
+    name: "PRレビュー依頼"
+    description: "Pull Requestのレビュー依頼メッセージ"
+    template: |
+      Could you please review https://github.com/{organization}/{repository}/pull/{pr_number} ?
+      This is mainly needed to {purpose}.
+      If you have questions, please comment in thread. :prey:
+    
+    placeholders:
+      "{organization}": "GitHub organization名"
+      "{repository}": "リポジトリ名"
+      "{pr_number}": "PR番号"
+      "{purpose}": "目的・理由"
+    
+    examples:
+      spanner_kit_upgrade: |
+        Could you please review https://github.com/your_org/your_repo/pull/{pr_number} ?
+        This is mainly needed to {purpose}.
+        If you have questions, please comment in thread. :prey:
+      
+      general_upgrade: |
+        Could you please review https://github.com/{organization}/{repository}/pull/{pr_number} ?
+        This is mainly needed to {purpose}.
+        If you have questions, please comment in thread. :prey:
+  
+  ci_failure_notification:
+    name: "CI失敗通知"
+    description: "CI失敗時の通知メッセージ"
+    template: |
+      :warning: CI failed for https://github.com/{organization}/{repository}/pull/{pr_number}
+      
+      **Error**: {error_message}
+      **Action**: {action_required}
+      
+      Please check and fix the issue.
+    
+    placeholders:
+      "{organization}": "GitHub organization名"
+      "{repository}": "リポジトリ名"
+      "{pr_number}": "PR番号"
+      "{error_message}": "エラーメッセージ"
+      "{action_required}": "必要なアクション"
+    
+    examples:
+      dependency_issue: |
+        :warning: CI failed for https://github.com/your_org/your_repo/pull/{pr_number}
+        
+        **Error**: Dependency version conflict
+        **Action**: Fix dependency versions and update PR
+        
+        Please check and fix the issue.
+  
+  production_deployment_notification:
+    name: "本番デプロイ通知"
+    description: "本番環境デプロイ通知メッセージ"
+    template: |
+      :rocket: Production deployment scheduled for {service}
+      
+      **Environment**: {environment}
+      **Scheduled Time**: {scheduled_time}
+      **Duration**: {estimated_duration}
+      **Impact**: {impact_level}
+      
+      Please be aware of potential service interruption.
+    
+    placeholders:
+      "{service}": "サービス名"
+      "{environment}": "環境名"
+      "{scheduled_time}": "予定時刻"
+      "{estimated_duration}": "推定所要時間"
+      "{impact_level}": "影響レベル"
+    
+    examples:
+      maintenance_window: |
+        :rocket: Production deployment scheduled for {service}
+        
+        **Environment**: Production
+        **Scheduled Time**: 2025-01-22 02:00-04:00 JST
+        **Duration**: 2 hours
+        **Impact**: Low (rolling deployment)
+        
+        Please be aware of potential service interruption.
+  
+  emergency_notification:
+    name: "緊急通知"
+    description: "緊急時の通知メッセージ"
+    template: |
+      :rotating_light: EMERGENCY: {issue_description}
+      
+      **Service**: {service}
+      **Environment**: {environment}
+      **Severity**: {severity_level}
+      **Status**: {current_status}
+      
+      Team is investigating. Updates will be posted here.
+    
+    placeholders:
+      "{issue_description}": "問題の説明"
+      "{service}": "サービス名"
+      "{environment}": "環境名"
+      "{severity_level}": "重要度レベル"
+      "{current_status}": "現在の状況"
+    
+    examples:
+      service_outage: |
+        :rotating_light: EMERGENCY: Service outage detected
+        
+        **Service**: {service}
+        **Environment**: Production
+        **Severity**: High
+        **Status**: Investigating
+        
+        Team is investigating. Updates will be posted here.
+  
+  success_notification:
+    name: "成功通知"
+    description: "成功時の通知メッセージ"
+    template: |
+      :white_check_mark: Successfully completed {operation}
+      
+      **Service**: {service}
+      **Environment**: {environment}
+      **Duration**: {duration}
+      **Status**: Completed successfully
+      
+      Thank you for your patience!
+    
+    placeholders:
+      "{operation}": "操作内容"
+      "{service}": "サービス名"
+      "{environment}": "環境名"
+      "{duration}": "所要時間"
+    
+    examples:
+      upgrade_completed: |
+        :white_check_mark: Successfully completed version upgrade
+        
+        **Service**: {service}
+        **Environment**: Production
+        **Duration**: 45 minutes
+        **Status**: Completed successfully
+        
+        Thank you for your patience!
+  
+  maintenance_notification:
+    name: "メンテナンス通知"
+    description: "メンテナンス通知メッセージ"
+    template: |
+      :tools: Scheduled maintenance for {service}
+      
+      **Environment**: {environment}
+      **Start Time**: {start_time}
+      **End Time**: {end_time}
+      **Impact**: {impact_description}
+      
+      Please plan accordingly.
+    
+    placeholders:
+      "{service}": "サービス名"
+      "{environment}": "環境名"
+      "{start_time}": "開始時刻"
+      "{end_time}": "終了時刻"
+      "{impact_description}": "影響の説明"
+    
+    examples:
+      database_maintenance: |
+        :tools: Scheduled maintenance for {service}
+        
+        **Environment**: Production
+        **Start Time**: 2025-01-25 01:00 JST
+        **End Time**: 2025-01-25 03:00 JST
+        **Impact**: Database will be read-only during maintenance
+        
+        Please plan accordingly.
+
+# Message Formatting Guidelines
+formatting_guidelines:
+  emoji_usage:
+    - ":bow: - お願い・謝罪"
+    - ":warning: - 警告・注意"
+    - ":rocket: - デプロイ・リリース"
+    - ":rotating_light: - 緊急・障害"
+    - ":white_check_mark: - 成功・完了"
+    - ":tools: - メンテナンス・作業"
+    - ":information_source: - 情報・通知"
+  
+  formatting_rules:
+    - "重要な情報は **太字** で強調"
+    - "URLは適切にリンク化"
+    - "コード・コマンドは `コードブロック` で囲む"
+    - "長いメッセージは段落分けする"
+    - "絵文字は適度に使用"
+  
+  language_guidelines:
+    - "英語メッセージを基本とする"
+    - "技術用語は統一する"
+    - "簡潔で分かりやすい表現"
+    - "敬語は控えめに"
+    - "チーム文化に合わせて調整"
+
+# Customization Guide
+customization_guide:
+  required_placeholders:
+    - "{organization}: GitHub organization名"
+    - "{repository}: リポジトリ名"
+    - "{pr_number}: PR番号"
+    - "{service}: サービス名"
+    - "{environment}: 環境名"
+  
+  optional_placeholders:
+    - "{purpose}: 目的・理由"
+    - "{error_message}: エラーメッセージ"
+    - "{action_required}: 必要なアクション"
+    - "{scheduled_time}: 予定時刻"
+    - "{duration}: 所要時間"
+  
+  customization_tips:
+    - "チームのSlack文化に合わせて調整"
+    - "絵文字の使用は控えめに"
+    - "重要な情報は必ず含める"
+    - "アクションが必要な場合は明確に記載"
+    - "継続的に改善・更新する"

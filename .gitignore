@@ -1,0 +1,162 @@
+# Security and Sensitive Files
+# セキュリティと機密ファイル
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.csr
+*.pem
+*.p8
+*.p12
+*.pfx
+*.crt
+*.csr
+*.der
+*.p7b
+*.p7c
+*.p7s
+*.p8
+*.p12
+*.pfx
+*.crt
+*.csr
+*.der
+*.p7b
+*.p7c
+*.p7s
+
+# Environment Variables and Configuration
+# 環境変数と設定ファイル
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.*.local
+config.local.*
+secrets.*
+credentials.*
+*.secret
+*.conf.local
+
+# API Keys and Tokens
+# APIキーとトークン
+api_keys.txt
+tokens.txt
+access_tokens.txt
+*.token
+*.key
+*.secret
+
+# Logs and Temporary Files
+# ログと一時ファイル
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE and Editor Files
+# IDEとエディタファイル
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.atom/
+.brackets.json
+
+# OS Generated Files
+# OS生成ファイル
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup Files
+# バックアップファイル
+*.bak
+*.backup
+*.old
+*.orig
+*.save
+
+# Cache and Build Directories
+# キャッシュとビルドディレクトリ
+.cache/
+build/
+dist/
+node_modules/
+vendor/
+
+# Test Coverage and Reports
+# テストカバレッジとレポート
+coverage/
+.nyc_output/
+*.lcov
+test-results/
+junit.xml
+
+# Personal Notes and Drafts
+# 個人メモとドラフト
+notes.txt
+draft.*
+TODO.md
+personal_notes.*
+*.draft
+
+# Database Files
+# データベースファイル
+*.db
+*.sqlite
+*.sqlite3
+
+# Archive Files
+# アーカイブファイル
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Large Binary Files
+# 大きなバイナリファイル
+*.bin
+*.dat
+*.data
+
+# Local Development Files
+# ローカル開発ファイル
+local/
+dev/
+development/
+test-data/
+
+# Monitoring and Analytics
+# 監視と分析ファイル
+analytics/
+monitoring/
+metrics/
+*.metrics
+
+# Documentation Drafts
+# ドキュメントドラフト
+docs/draft/
+docs/temp/
+*.draft.md
+*.temp.md
+
+# Project Specific
+# プロジェクト固有
+# Add any project-specific files here
+# プロジェクト固有のファイルをここに追加
+
+# Keep this file
+# このファイルは保持
+!.gitignore

@@ -1,0 +1,208 @@
+# Slack Message Templates
+# Message templates for Slack posts
+
+templates:
+  pr_review_request:
+    name: "PR Review Request"
+    description: "Pull Request review request message"
+    template: |
+      Could you please review https://github.com/{organization}/{repository}/pull/{pr_number} ?
+      This is mainly needed to {purpose}.
+      If you have questions, please comment in thread. :prey:
+    
+    placeholders:
+      "{organization}": "GitHub organization name"
+      "{repository}": "Repository name"
+      "{pr_number}": "PR number"
+      "{purpose}": "Purpose and reason"
+    
+    examples:
+      spanner_kit_upgrade: |
+        Could you please review https://github.com/your_org/your_repo/pull/{pr_number} ?
+        This is mainly needed to {purpose}.
+        If you have questions, please comment in thread. :prey:
+      
+      general_upgrade: |
+        Could you please review https://github.com/{organization}/{repository}/pull/{pr_number} ?
+        This is mainly needed to {purpose}.
+        If you have questions, please comment in thread. :prey:
+  
+  ci_failure_notification:
+    name: "CI Failure Notification"
+    description: "Notification message when CI fails"
+    template: |
+      :warning: CI failed for https://github.com/{organization}/{repository}/pull/{pr_number}
+      
+      **Error**: {error_message}
+      **Action**: {action_required}
+      
+      Please check and fix the issue.
+    
+    placeholders:
+      "{organization}": "GitHub organization name"
+      "{repository}": "Repository name"
+      "{pr_number}": "PR number"
+      "{error_message}": "Error message"
+      "{action_required}": "Required action"
+    
+    examples:
+      dependency_issue: |
+        :warning: CI failed for https://github.com/your_org/your_repo/pull/{pr_number}
+        
+        **Error**: Dependency version conflict
+        **Action**: Fix dependency versions and update PR
+        
+        Please check and fix the issue.
+  
+  production_deployment_notification:
+    name: "Production Deployment Notification"
+    description: "Production environment deployment notification message"
+    template: |
+      :rocket: Production deployment scheduled for {service}
+      
+      **Environment**: {environment}
+      **Scheduled Time**: {scheduled_time}
+      **Duration**: {estimated_duration}
+      **Impact**: {impact_level}
+      
+      Please be aware of potential service interruption.
+    
+    placeholders:
+      "{service}": "Service name"
+      "{environment}": "Environment name"
+      "{scheduled_time}": "Scheduled time"
+      "{estimated_duration}": "Estimated duration"
+      "{impact_level}": "Impact level"
+    
+    examples:
+      maintenance_window: |
+        :rocket: Production deployment scheduled for {service}
+        
+        **Environment**: Production
+        **Scheduled Time**: 2025-01-22 02:00-04:00 JST
+        **Duration**: 2 hours
+        **Impact**: Low (rolling deployment)
+        
+        Please be aware of potential service interruption.
+  
+  emergency_notification:
+    name: "Emergency Notification"
+    description: "Emergency notification message"
+    template: |
+      :rotating_light: EMERGENCY: {issue_description}
+      
+      **Service**: {service}
+      **Environment**: {environment}
+      **Severity**: {severity_level}
+      **Status**: {current_status}
+      
+      Team is investigating. Updates will be posted here.
+  
+  success_notification:
+    name: "Success Notification"
+    description: "Success notification message"
+    template: |
+      :white_check_mark: Successfully completed {operation}
+      
+      **Service**: {service}
+      **Environment**: {environment}
+      **Duration**: {duration}
+      **Status**: Completed successfully
+      
+      Thank you for your patience!
+    
+    placeholders:
+      "{operation}": "Operation content"
+      "{service}": "Service name"
+      "{environment}": "Environment name"
+      "{duration}": "Duration"
+    
+    examples:
+      upgrade_completed: |
+        :white_check_mark: Successfully completed version upgrade
+        
+        **Service**: {service}
+        **Environment**: Production
+        **Duration**: 45 minutes
+        **Status**: Completed successfully
+        
+        Thank you for your patience!
+  
+  maintenance_notification:
+    name: "Maintenance Notification"
+    description: "Maintenance notification message"
+    template: |
+      :tools: Scheduled maintenance for {service}
+      
+      **Environment**: {environment}
+      **Start Time**: {start_time}
+      **End Time**: {end_time}
+      **Impact**: {impact_description}
+      
+      Please plan accordingly.
+    
+    placeholders:
+      "{service}": "Service name"
+      "{environment}": "Environment name"
+      "{start_time}": "Start time"
+      "{end_time}": "End time"
+      "{impact_description}": "Impact description"
+    
+    examples:
+      database_maintenance: |
+        :tools: Scheduled maintenance for {service}
+        
+        **Environment**: Production
+        **Start Time**: 2025-01-25 01:00 JST
+        **End Time**: 2025-01-25 03:00 JST
+        **Impact**: Database will be read-only during maintenance
+        
+        Please plan accordingly.
+
+# Message Formatting Guidelines
+formatting_guidelines:
+  emoji_usage:
+    - ":bow: - Request and apology"
+    - ":warning: - Warning and caution"
+    - ":rocket: - Deploy and release"
+    - ":rotating_light: - Emergency and incident"
+    - ":white_check_mark: - Success and completion"
+    - ":tools: - Maintenance and work"
+    - ":information_source: - Information and notification"
+  
+  formatting_rules:
+    - "Emphasize important information with **bold**"
+    - "Link URLs appropriately"
+    - "Enclose code and commands in `code blocks`"
+    - "Break long messages into paragraphs"
+    - "Use emojis moderately"
+  
+  language_guidelines:
+    - "Use English messages as standard"
+    - "Standardize technical terms"
+    - "Concise and easy-to-understand expressions"
+    - "Use polite language moderately"
+    - "Adjust to team culture"
+
+# Customization Guide
+customization_guide:
+  required_placeholders:
+    - "{organization}: GitHub organization name"
+    - "{repository}: Repository name"
+    - "{pr_number}: PR number"
+    - "{service}: Service name"
+    - "{environment}: Environment name"
+  
+  optional_placeholders:
+    - "{purpose}: Purpose and reason"
+    - "{error_message}: Error message"
+    - "{action_required}: Required action"
+          - "{scheduled_time}: Scheduled time"
+      - "{duration}: Duration"
+  
+  customization_tips:
+    - "Adjust to team's Slack culture"
+    - "Use emojis moderately"
+    - "Always include important information"
+    - "Clearly state when action is required"
+    - "Continuously improve and update"

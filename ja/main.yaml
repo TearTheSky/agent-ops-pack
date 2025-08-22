@@ -1,0 +1,45 @@
+# パッケージ基本情報
+package:
+  description: "AIエージェント運用パッケージのメイン機能"
+  entry_point: "main.yaml"
+
+# READMEのStep概要（AIエージェント向け）
+readme_steps:
+  step1: "パッケージをダウンロード"
+  step2: "AIエージェントの性格を設定（persona/ai_persona_template.yaml）"
+  step3: "AIエージェントにペルソナを与え、状況と次のステップを教える"
+  step4: "作業手順書を作成（推奨：/work_definition/CONFIG.yamlを修正してAIによる自動生成）"
+  step5: "実際に使ってみる（作業開始→進捗確認→結果記録→チーム連絡→反省会実施→次回改善）"
+
+# Step4の詳細説明（AIエージェント向け）
+step4_details:
+  recommended_method: "AI自動生成（CONFIG.yaml修正）"
+  reason: "手動作成は項目が多く複雑なため、AI自動生成を推奨"
+  process: "1. CONFIG.yamlを修正 → 2. AIが自動生成 → 3. 開発環境で試行 → 4. 反省会で改善 → 5. 手順書を育てる"
+  config_location: "work_definition/CONFIG.yaml"
+  expected_output: "work_definition/operation_guide.yaml"
+  quality_assurance: "開発環境での試行と反省会による継続的改善"
+
+# 主要ファイルの参照
+files:
+  persona: "persona/ai_persona_template.yaml"
+  work_definition: "work_definition/long_operation_guide_template.yaml"
+  progress_tracking: "progress_tracking/progress_tracking_config.yaml"
+  philosophy: "philosophy/lesson_learned.yaml"
+  retrospective: "retrospective/retrospective_how_to.yaml"
+  templates: "templates/slack_message_templates.yaml"
+
+# 実行順序
+execution_order:
+  1. "persona/ai_persona_template.yaml"
+  2. "work_definition/long_operation_guide_template.yaml"
+  3. "progress_tracking/progress_tracking_config.yaml"
+  4. "templates/slack_message_templates.yaml"
+  5. "philosophy/lesson_learned.yaml"
+  6. "retrospective/retrospective_how_to.yaml"
+
+# 条件分岐
+conditional_files:
+  error_occurrence: "philosophy/lesson_learned.yaml"
+  retrospective_needed: "retrospective/retrospective_how_to.yaml"
+  template_needed: "templates/slack_message_templates.yaml"

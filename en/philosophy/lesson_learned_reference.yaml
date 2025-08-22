@@ -1,0 +1,78 @@
+# ------------------------------------------------------------
+# Lesson Learned Reference
+# This document should be used as reference material and basically not updated
+# ------------------------------------------------------------
+
+# ------------------------------------------------------------
+# No1: Git Conflict Error Handling
+# ------------------------------------------------------------
+lesson_learned_1:
+  title: "Git Conflict Error Handling"
+  project: "example-service"
+  date: "2025-01-21"
+  environment: "development"
+
+  issue:
+    - "Git conflict error occurred"
+  
+  actions:
+    - "Delete remote and local branches and create new ones"
+  
+  lesson_learned:
+    - "Check existing branches beforehand"
+
+# ------------------------------------------------------------
+# No2: Argument Format Error Handling
+# ------------------------------------------------------------
+lesson_learned_2:
+  title: "Argument Format Error Handling"
+  project: "example-service"
+  date: "2025-01-21"
+  environment: "development"
+
+  issue:
+    - "Argument format error occurred"
+  
+  actions:
+    - "Update work definition to specify arguments with full paths"
+  
+  lesson_learned:
+    - "Specify arguments with full paths"
+
+# ------------------------------------------------------------
+# No3: CI Error Handling
+# ------------------------------------------------------------
+lesson_learned_3:
+  title: "CI Error Handling"
+  project: "example-service"
+  date: "2025-01-21"
+  environment: "development"
+
+  issue:
+    - "CI error occurred"
+  
+  actions:
+    - "Create fix PR and special handling"
+    - "Check arguments for each work unit"
+  
+  lesson_learned:
+    - "Rapid fix PR creation is important when CI errors occur"
+
+# ------------------------------------------------------------
+# No4: IDE Characteristic Error Handling
+# ------------------------------------------------------------
+lesson_learned_4:
+  title: "IDE Characteristic Error Handling"
+  project: "example-service"
+  date: "2025-01-21"
+  environment: "development"
+
+  issue:
+    - "Error occurred due to IDE characteristics"
+  
+  actions:
+    - "Change work content to have AI instruct background migration"
+    - "Restart IDE as needed"
+  
+  lesson_learned:
+    - "Understanding IDE characteristics and appropriate handling methods"

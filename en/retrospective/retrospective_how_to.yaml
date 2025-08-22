@@ -1,0 +1,166 @@
+# ------------------------------------------------------------
+# Retrospective How-To Guide
+# This retrospective content can also be used for human-to-human retrospectives
+# ------------------------------------------------------------
+
+retrospective_how_to:
+  name: "AI Agent & Human Retrospective Guide"
+  description: "Guide for AI agents and humans to conduct effective retrospectives"
+  
+  # Basic principles of retrospectives (basically just follow these)
+  basic_principles:
+    - "Aim for continuous improvement"
+    - "Don't be formal, start with even one question"
+    - "Ask AI: How can we avoid ⚪︎⚪︎ next time?"
+    - "Focus on improvement, not blame"
+    - "If you have ideas, provide specific action items"
+    - "Don't take AI's answers at face value, examine them"
+    - "Respect each other's perspectives"
+    - "Strive for constructive feedback"
+    - "For decided actions, have AI update this ops-pack themselves"
+    - "Ask AI to record retrospectives (txt, md, csv, etc.) as needed"
+    - "Repeat small retrospectives regularly"
+    - "AI will create improvement tools or modify existing tools, so take time to implement without being lazy"
+  
+  # Retrospective timing
+  timing:
+    session_end: "At the end of work sessions (one complete work unit)"
+    milestone_completion: "At milestone completion"
+    error_occurrence: "When errors occur"
+    daily_review: "Daily review, before end of day work"
+    project_completion: "At project completion"
+  
+  # How to conduct retrospectives
+  process:
+    step1_preparation:
+      name: "Preparation"
+      description: "Prepare for retrospective"
+      actions:
+        - "Review work records and logs"
+        - "Organize issues that occurred"
+        - "Organize successful points"
+        - "Identify areas for improvement"
+    
+    step2_issue_identification:
+      name: "Issue Identification"
+      description: "Specifically identify issues that occurred"
+      actions:
+        - "Check error messages"
+        - "Analyze causes of problems"
+        - "Evaluate impact scope"
+        - "Consider recurrence possibility"
+      questions:
+        - "What was the problem?"
+        - "Why did that problem occur?"
+        - "What impact did it have?"
+        - "How can we prevent the same problem in the future?"
+    
+    step3_solution_discussion:
+      name: "Solution Discussion"
+      description: "Consider solutions to problems"
+      actions:
+        - "Propose multiple solutions"
+        - "Consider pros and cons of each solution"
+        - "Evaluate implementation feasibility"
+        - "Determine priorities"
+      questions:
+        - "What solutions can be considered?"
+        - "What is the effect of each solution?"
+        - "What is the implementation difficulty?"
+        - "Which solution should be prioritized?"
+    
+    step4_workflow_improvement:
+      name: "Workflow Improvement"
+      description: "Improve work definitions and processes"
+      actions:
+        - "Update work definitions"
+        - "Add error handling"
+        - "Strengthen pre-checks"
+        - "Document best practices"
+      questions:
+        - "What should be added to work definitions?"
+        - "What pre-checks are needed?"
+        - "How to improve error handling?"
+        - "Can it be shared with other teams?"
+    
+    step5_action_planning:
+      name: "Action Planning"
+      description: "Decide specific action items"
+      actions:
+        - "Prioritize improvement items"
+        - "Decide responsible persons"
+        - "Set deadlines"
+        - "Decide progress confirmation methods"
+      questions:
+        - "Which improvement should be prioritized?"
+        - "Who will be responsible?"
+        - "When should it be completed?"
+        - "How to confirm progress?"
+
+# ------------------------------------------------------------
+# Optional
+# ------------------------------------------------------------
+
+  # Retrospective examples
+  example:
+    
+    issues_identified:
+      - issue: "Added unnecessary content to Slack messages"
+        cause: "Changed the template of the work definition document without permission"
+        impact: "Low (resulted in no problem, but lacked consistency)"
+        solution: "Add a rule to the work definition document: 'Do not change message content'"
+        priority: "Medium"
+      
+      - issue: "An error occurred in the permission application system"
+        cause: "Google authentication had expired"
+        impact: "Medium (work was delayed)"
+        solution: "Add a rule: 'Run gcloud auth login, etc. before starting work'"
+        priority: "High"
+    
+    improvements_made:
+      - area: "Work definition document"
+        change: "Add standardization rules for Slack messages"
+        benefit: "Consistent communication"
+        status: "Implemented"
+      
+      - area: "Pre-checks"
+        change: "Add mandatory step: Google authentication confirmation"
+        benefit: "Prevention of permission errors"
+        status: "Implemented"
+    
+    action_items:
+      - item: "Add communication rules to work definition document"
+        owner: "AI Agent"
+        deadline: "2025-01-22"
+        status: "Completed"
+      
+      - item: "Optimize permission application time (shorten to 30 minutes)"
+        owner: "Human"
+        deadline: "2025-01-22"
+        status: "Completed"
+    
+    lessons_learned:
+      - lesson: "Importance of consistency in work definitions"
+        application: "Be cautious when changing templates and clarify rules"
+        sharing: "Apply to work definition documents of other teams"
+      
+      - lesson: "Importance of pre-authentication confirmation"
+        application: "Always check authentication status before any work requiring permission"
+        sharing: "Share with teams performing similar permission application work"
+  
+  # Effectiveness measurement (if needed)
+  effectiveness_measurement:
+    metrics:
+      - "Reduction in error rate"
+      - "Shortening of work time"
+      - "Number of work definition document improvements"
+      - "Completion rate of action items"
+      - "Team satisfaction improvement"
+    
+    evaluation_methods:
+      - "Regular retrospectives"
+      - "Quantitative evaluation of improvement effectiveness"
+      - "Feedback from team members"
+      - "Measurement of work efficiency"
+      - "Tracking of quality indicators"
+

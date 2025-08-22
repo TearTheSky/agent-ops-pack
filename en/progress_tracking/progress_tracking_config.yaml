@@ -1,0 +1,111 @@
+# ------------------------------------------------------------
+# Progress Tracking Configuration Definition
+# ------------------------------------------------------------
+progress_tracking_config:
+  name: "Progress Tracking Configuration"
+  description: "Three purpose-specific settings for progress recording"
+  # Please update this file as needed
+  
+  file_management:
+    # Enable/disable daily file splitting
+    daily_file_splitting: true
+    # File naming pattern (format and extension determined by human instructions)
+    file_naming_pattern: "{YYYY-MM-DD}_work_log.*"
+    # Archive old files
+    suggest_archive_old_files: true
+    # Number of files to keep (latest N files)
+    max_files_to_keep: 30
+
+  # Records for SpreadSheet - Records for spreadsheets
+  records_for_spreadsheet:
+    format: "TSV"
+    fields:
+      - "service"      # Service name
+      - "environment"  # Environment
+      - "status"       # Status
+      - "dev_pr"       # Development PR
+      - "prod_pr"      # Production PR
+      - "memo"         # Memo
+    template: "{service}	{environment}	{status}	{dev_pr}	{prod_pr}	{memo}"
+    example: "example-service	development	INPROGRESS	https://github.com/org/repo/pull/12345		CI success, waiting for review"
+  
+  # Working result for AI agent own - AI agent's own work result records
+  working_result_for_ai_agent_own:
+    format: "CSV"
+    fields:
+      - "service"        # Service name
+      - "environment"    # Environment
+      - "status"         # Status
+      - "started_at"     # Start time
+      - "completed_at"   # Completion time
+      - "duration"       # Duration
+      - "issues"         # Issues that occurred
+      - "solutions"      # Applied solutions
+      - "next_steps"     # Next steps
+      - "lessons_learned" # Lessons learned
+    template: |
+      Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
+      {service},{environment},{status},{started_at},{completed_at},{duration},"{issues}","{solutions}","{next_steps}","{lessons_learned}"
+    example: |
+      Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
+      example-service,development,INPROGRESS,2025-01-21 10:30:00,,,"Git branch conflict occurred","Deleted existing branch and created new one","Wait for CI completion; Post Slack notification","Always check existing branches before creating new ones"
+  
+  # Evidence Report for Issue Tracker - Evidence reports for issue tracking tools
+  evidence_report_for_issue_tracker:
+    format: "Markdown"
+    fields:
+      - "service"        # Service name
+      - "environment"    # Environment
+      - "operation"      # Work content
+      - "status"         # Result
+      - "pr_url"         # PR URL
+      - "ci_result"      # CI result
+      - "slack_status"   # Slack post status
+      - "start_time"     # Start time
+      - "end_time"       # End time
+      - "duration"       # Duration
+      - "notes"          # Special notes
+    template: |
+      ## Work Completion Report
+      
+      ### Target
+      - **Microservice**: {service}
+      - **Environment**: {environment}
+      - **Work Content**: {operation}
+      
+      ### Execution Results
+      - **Status**: {status}
+      - **PR URL**: {pr_url}
+      - **CI Result**: {ci_result}
+      - **Slack Post**: {slack_status}
+      
+      ### Execution Time
+      - **Start Time**: {start_time}
+      - **Completion Time**: {end_time}
+      - **Duration**: {duration}
+      
+      ### Special Notes
+      {notes}
+    example: |
+      ## Work Completion Report
+      
+      ### Target
+      - **Microservice**: example-service
+      - **Environment**: development
+      - **Work Content**: Service version upgrade
+      
+      ### Execution Results
+      - **Status**: INPROGRESS
+      - **PR URL**: https://github.com/your_org/your_repo/pull/12345
+      - **CI Result**: CI success, waiting for review
+      - **Slack Post**: Sent
+      
+      ### Execution Time
+      - **Start Time**: 2025-01-21 10:30:00
+      - **Completion Time**: 
+      - **Duration**: 
+      
+      ### Special Notes
+      - Git branch conflict occurred and resolved
+      - CI is currently running
+      - Slack notification sent successfully

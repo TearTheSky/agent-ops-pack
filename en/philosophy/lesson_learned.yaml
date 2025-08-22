@@ -1,0 +1,30 @@
+# ------------------------------------------------------------
+# Lesson Learned
+# For AI: Copy the template and create new Lesson Learned as needed.
+# ------------------------------------------------------------
+
+# ------------------------------------------------------------
+# Template
+# ------------------------------------------------------------
+
+lesson_learned:
+  title: ""
+  project: ""
+  date: ""
+  environment: ""
+  # 1 issue, multiple actions looks better than multiple issues, multiple actions.
+  issue:
+    - ""
+  actions:
+    - "{ACTION_1}"
+    - "{ACTION_2}"
+    - "{ACTION_3}"
+
+  lesson_learned:
+    - "{LEARNED_1}"
+    - "{LEARNED_2}"
+    - "{LEARNED_3}"
+
+# ------------------------------------------------------------
+# No1 {Title}
+# ------------------------------------------------------------

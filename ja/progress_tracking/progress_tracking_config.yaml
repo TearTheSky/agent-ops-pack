@@ -1,0 +1,111 @@
+# ------------------------------------------------------------
+# 進捗記録の設定定義
+# ------------------------------------------------------------
+progress_tracking_config:
+  name: "進捗追跡設定"
+  description: "進捗記録の3つの用途別設定"
+  # 必要に応じて、このファイルを更新してください
+  
+  file_management:
+    # 日別ファイル分割の有効/無効
+    daily_file_splitting: true
+    # ファイル命名パターン(書式と拡張子は人間の指示に従って決める)
+    file_naming_pattern: "{YYYY-MM-DD}_work_log.*"
+    # 古いファイルのアーカイブ
+    suggest_archive_old_files: true
+    # 保持するファイル数（最新のN個）
+    max_files_to_keep: 30
+
+  # Records for SpreadSheet - スプレッドシート用の記録
+  records_for_spreadsheet:
+    format: "TSV"
+    fields:
+      - "service"      # サービス名
+      - "environment"  # 環境
+      - "status"       # ステータス
+      - "dev_pr"       # 開発PR
+      - "prod_pr"      # 本番PR
+      - "memo"         # メモ
+    template: "{service}	{environment}	{status}	{dev_pr}	{prod_pr}	{memo}"
+    example: "example-service	development	INPROGRESS	https://github.com/org/repo/pull/12345		CI success, waiting for review"
+  
+  # Working result for AI agent own - AIエージェント自身の作業結果記録
+  working_result_for_ai_agent_own:
+    format: "CSV"
+    fields:
+      - "service"        # サービス名
+      - "environment"    # 環境
+      - "status"         # ステータス
+      - "started_at"     # 開始時刻
+      - "completed_at"   # 完了時刻
+      - "duration"       # 所要時間
+      - "issues"         # 発生した問題
+      - "solutions"      # 適用した解決策
+      - "next_steps"     # 次のステップ
+      - "lessons_learned" # 学んだこと
+    template: |
+      Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
+      {service},{environment},{status},{started_at},{completed_at},{duration},"{issues}","{solutions}","{next_steps}","{lessons_learned}"
+    example: |
+      Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
+      example-service,development,INPROGRESS,2025-01-21 10:30:00,,,"Git branch conflict occurred","Deleted existing branch and created new one","Wait for CI completion; Post Slack notification","Always check existing branches before creating new ones"
+  
+  # Evidence Report for Issue Tracker - 課題管理ツール用のエビデンス報告
+  evidence_report_for_issue_tracker:
+    format: "Markdown"
+    fields:
+      - "service"        # サービス名
+      - "environment"    # 環境
+      - "operation"      # 作業内容
+      - "status"         # 結果
+      - "pr_url"         # PR URL
+      - "ci_result"      # CI結果
+      - "slack_status"   # Slack投稿状況
+      - "start_time"     # 開始時刻
+      - "end_time"       # 終了時刻
+      - "duration"       # 所要時間
+      - "notes"          # 特記事項
+    template: |
+      ## 作業完了報告
+      
+      ### 対象
+      - **マイクロサービス**: {service}
+      - **環境**: {environment}
+      - **作業内容**: {operation}
+      
+      ### 実行結果
+      - **ステータス**: {status}
+      - **PR URL**: {pr_url}
+      - **CI結果**: {ci_result}
+      - **Slack投稿**: {slack_status}
+      
+      ### 実行時間
+      - **開始時刻**: {start_time}
+      - **完了時刻**: {end_time}
+      - **所要時間**: {duration}
+      
+      ### 特記事項
+      {notes}
+    example: |
+      ## 作業完了報告
+      
+      ### 対象
+      - **マイクロサービス**: example-service
+      - **環境**: development
+      - **作業内容**: サービスのバージョンアップ
+      
+      ### 実行結果
+      - **ステータス**: INPROGRESS
+      - **PR URL**: https://github.com/your_org/your_repo/pull/12345
+      - **CI結果**: CI success, waiting for review
+      - **Slack投稿**: Sent
+      
+      ### 実行時間
+      - **開始時刻**: 2025-01-21 10:30:00
+      - **完了時刻**: 
+      - **所要時間**: 
+      
+      ### 特記事項
+      - Git branch conflict occurred and resolved
+      - CI is currently running
+      - Slack notification sent successfully

@@ -1,0 +1,45 @@
+# Package Basic Information
+package:
+  description: "AI Agent Operations Package main function"
+  entry_point: "main.yaml"
+
+# README Step Overview (for AI Agents)
+readme_steps:
+  step1: "Download package"
+  step2: "Configure AI agent personality (persona/ai_persona_template.yaml)"
+  step3: "Give personality to AI agent and explain situation and next steps"
+  step4: "Create work procedure (recommended: modify /work_definition/CONFIG.yaml for AI auto-generation)"
+  step5: "Actually try it (work start → progress confirmation → result recording → team communication → retrospective implementation → next improvement)"
+
+# Step 4 Detailed Explanation (for AI Agents)
+step4_details:
+  recommended_method: "AI auto-generation (CONFIG.yaml modification)"
+  reason: "Manual creation has many items and is complex, so AI auto-generation is recommended"
+  process: "1. Modify CONFIG.yaml → 2. AI auto-generates → 3. Test in development environment → 4. Improve through retrospectives → 5. Grow the procedure"
+  config_location: "work_definition/CONFIG.yaml"
+  expected_output: "work_definition/operation_guide.yaml"
+  quality_assurance: "Continuous improvement through testing in development environment and retrospectives"
+
+# Main File References
+files:
+  persona: "persona/ai_persona_template.yaml"
+  work_definition: "work_definition/long_operation_guide_template.yaml"
+  progress_tracking: "progress_tracking/progress_tracking_config.yaml"
+  philosophy: "philosophy/lesson_learned.yaml"
+  retrospective: "retrospective/retrospective_how_to.yaml"
+  templates: "templates/slack_message_templates.yaml"
+
+# Execution Order
+execution_order:
+  1. "persona/ai_persona_template.yaml"
+  2. "work_definition/long_operation_guide_template.yaml"
+  3. "progress_tracking/progress_tracking_config.yaml"
+  4. "templates/slack_message_templates.yaml"
+  5. "philosophy/lesson_learned.yaml"
+  6. "retrospective/retrospective_how_to.yaml"
+
+# Conditional Branches
+conditional_files:
+  error_occurrence: "philosophy/lesson_learned.yaml"
+  retrospective_needed: "retrospective/retrospective_how_to.yaml"
+  template_needed: "templates/slack_message_templates.yaml"

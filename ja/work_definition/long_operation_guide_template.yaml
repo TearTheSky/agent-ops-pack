@@ -1,0 +1,257 @@
+# Long Operation Guide Template
+# 長い運用業務の作業定義書テンプレート
+
+workflow:
+  name: "{WORKFLOW_NAME}"  # 例: "Module v1.0.0 Upgrade"
+  description: "{WORKFLOW_DESCRIPTION}"  # 例: "Upgrade microservices from module-name to v1.0.0"
+  environment: "{ENVIRONMENT}"  # 例: "production" or "development"
+  
+  configuration:
+    base_path: "{BASE_PATH}"  # 例: "/path/to/your-project/terraform/microservices"
+    script_path: "{SCRIPT_PATH}"  # 例: "/path/to/your-scripts/version-updater"
+    script_name: "{SCRIPT_NAME}"  # 例: "create_pull_request.sh"
+    environment: "{ENVIRONMENT}"  # Target environment
+    slack_user_id: "必須: チャンネル招待と通知用のSlackユーザーID"
+    
+  # IDE Terminal Workflow
+  ide_terminal_workflow:
+    description: "IDEの長時間実行スクリプトをバックグラウンドに移動する傾向に対処"
+    action: "実行開始後にスクリプトをバックグラウンドに移動するようユーザーに要求"
+    note: "次のステップに進む前にユーザーの結果報告を待つ"
+
+  # Environment Specific Checks
+  environment_specific_checks:
+    production_checks:
+      - "ユーザーの確認なしにアクションを実行しない"
+      - "開発環境のアップグレード完了を確認"
+      - "本番環境に必要なモジュールがあることを確認"
+      - "チームに本番アップグレードについて通知"
+      - "バックアップが利用可能であることを確認"
+    
+    development_checks:
+      - "開発環境に必要なモジュールがあることを確認"
+      - "テスト環境の準備ができていることを確認"
+
+  # Main Workflow Steps
+  steps:
+    - name: "作業開始記録"
+      description: "この操作の開始時刻を記録"
+      action: "record_start_time"
+      command: "echo $(date '+%Y-%m-%d %H:%M:%S') > /tmp/{service}_{environment}_start_time.txt"
+      note: "重要: 操作前に必ず開始時刻を記録"
+      
+    - name: "前提ファイル確認"
+      description: "対象サービスが対象環境で必要なモジュールを使用しているかチェック"
+      action: "check_file_exists"
+      command: "find {base_path}/{service}/{environment} -name '{module_file}'"
+      expected_pattern: "{service}/{environment}/{module_file}"
+      on_success: "proceed_to_next_step"
+      on_failure: "mark_as_skipped"
+      
+    - name: "アップグレード実行"
+      description: "アップグレードスクリプトを実行"
+      action: "run_script"
+      command: "{script_path}/{script_name} {base_path}/{service} {environment} {slack_user_id}"
+      timeout: "{SCRIPT_TIMEOUT}"  # 例: "30m"
+      ide_workflow: "スクリプト開始後にバックグラウンドに移動するようユーザーに要求"
+      slack_user_id_parameter: "必須: チャンネル招待と通知用のSlackユーザーID"
+      on_success: "proceed_to_next_step"
+      on_failure: "mark_as_failed"
+      
+    - name: "CI待ち"
+      description: "タイムアウト付きでCI完了を待機"
+      action: "wait_ci"
+      timeout: "{ci_timeout}"
+      on_success: "proceed_to_next_step"
+      on_timeout: "proceed_anyway"  # CIが保留中でもSlackに投稿
+      
+    - name: "Slack投稿"
+      description: "SlackにPRレビュー依頼を投稿"
+      action: "post_slack"
+      command: "{slack_command}"
+      message_template: |
+        {SLACK_MESSAGE_TEMPLATE}
+      on_success: "proceed_to_next_step"
+      on_failure: "log_error_continue"
+      
+    - name: "作業完了記録"
+      description: "終了時刻を記録し所要時間を計算"
+      action: "record_end_time"
+      command: |
+        echo $(date '+%Y-%m-%d %H:%M:%S') > /tmp/{service}_{environment}_end_time.txt
+        echo "Duration recorded" > /tmp/{service}_{environment}_duration.txt
+      note: "重要: 必ず終了時刻を記録"
+      
+    - name: "進捗記録"
+      description: "タイミング情報付きで進捗追跡記録を生成"
+      action: "generate_progress_record"
+      format: "{PROGRESS_FORMAT}"  # 例: "Status	Dev PR	Prod PR	Memo"
+      output_format: "{OUTPUT_FORMAT}"  # 例: "tsv_without_header"
+      timing_information:
+        start_time_file: "/tmp/{service}_{environment}_start_time.txt"
+        end_time_file: "/tmp/{service}_{environment}_end_time.txt"
+        duration_file: "/tmp/{service}_{environment}_duration.txt"
+      rules:
+        status:
+          development_only_completed: "{DEV_ONLY_STATUS}"  # 例: "INPROGRESS"
+          both_dev_prod_completed: "{BOTH_COMPLETED_STATUS}"  # 例: "DONE"
+          skipped: "{SKIPPED_STATUS}"  # 例: "INPROGRESS"
+        dev_pr:
+          success: "{pr_url}"
+          skipped: ""
+          failed: ""
+        prod_pr:
+          always: ""  # Production PRs handled separately
+
+# Error Handling
+error_handling:
+  git_branch_conflict:
+    error: "Updates were rejected because the tip of your current branch is behind"
+    solution: "リモートブランチ削除 → ローカルブランチ削除 → 新規作成"
+  
+  argument_format_error:
+    error: "first param(ms_dir) doesn't exist"
+    solution: "フルパスで指定"
+  
+  ci_failure:
+    error: "CI failed, need fix"
+    solution: "修正PR作成・特別対応"
+  
+  permission_system_error:
+    error: "panic: cannot find object"
+    solution: "手動確認・再実行"
+  
+  timing_error:
+    error: "Start time or end time file not found"
+    solution: "手動で時刻を記録"
+  
+  authentication_error:
+    error: "oauth2: \"invalid_grant\""
+    solution: "認証トークンの更新が必要"
+  
+  production_permission_error:
+    error: "Permission denied or insufficient permissions"
+    solution: "本番環境用の追加権限取得システム申請"
+  
+  production_resource_limit_error:
+    error: "Quota exceeded or resource limit"
+    solution: "現在の使用量確認とクォータ増加申請"
+  
+  timeout_error:
+    error: "CI timeout or operation timeout"
+    solution: "タイムアウト設定の調整または手動継続"
+  
+  file_not_found:
+    error: "Required file not found"
+    solution: "ファイルの存在確認と代替手段の検討"
+  
+  script_directory_error:
+    error: "Script executed from wrong directory"
+    solution: "正しいディレクトリでの実行"
+  
+  existing_branch_error:
+    error: "Branch already exists"
+    solution: "既存ブランチの確認と削除"
+  
+  terminal_output_lost:
+    error: "Commands execute but no output displayed"
+    solution: "新しいシェルセッションの作成"
+  
+  script_silent_completion:
+    error: "Script completed without visible output"
+    solution: "実際の結果の確認"
+  
+  slack_not_in_channel:
+    error: "Failed to post message: not_in_channel"
+    solution: "チャンネルへの参加確認"
+  
+  cursor_background_issue:
+    error: "Script execution disappears from terminal"
+    solution: "ユーザーとの協調ワークフロー"
+
+# Safety Measures
+safety_measures:
+  general_safety:
+    - "AIは自動でコマンドを実行しない"
+    - "操作前の多重確認を行う"
+    - "影響範囲の事前調査を行う"
+    - "バックアップ・ロールバック計画の有無や必要性を確認"
+    - "段階的実行・各ステップでの確認を行う"
+    - "権限の確認を行う"
+    - "依存関係の確認を行う"
+
+  environment_specific_safety:
+    development_safety:
+      - "開発環境での事前テストを行う"
+      - "CI/CDパイプラインの確認を行う"
+      - "テスト環境の準備確認"
+      - "環境固有の注意事項や安全対策が必要な場合は、ここを拡張してください"
+    
+    production_safety:
+      - "本番環境操作前の多重確認を行う"
+      - "開発環境での完了確認"
+      - "チームへの事前連絡"
+      - "バックアップの確認"
+      - "ロールバック計画の準備"
+      - "環境固有の注意事項や安全対策が必要な場合は、ここを拡張してください"
+    
+    staging_safety:
+      - "ステージング環境での事前テスト"
+      - "本番環境との差分確認"
+      - "環境固有の注意事項や安全対策が必要な場合は、ここを拡張してください"
+
+  specific_safety_measures:
+    permission_system_safety:
+      - "適切な権限範囲での権限取得システム申請"
+      - "必要最小限の権限のみを要求"
+      - "権限の有効期限の確認"
+    
+    confirmation_prompts:
+      - "各削除操作前の確認プロンプト"
+      - "重要な変更前のユーザー確認"
+      - "段階的実行での各ステップ確認"
+    
+    staged_execution:
+      - "段階的な実行と検証"
+      - "各ステップでの結果確認"
+      - "問題発生時の即座の中止"
+    
+    rollback_preparation:
+      - "ロールバック手順の事前準備"
+      - "ロールバックに必要な権限の確認"
+      - "ロールバック実行の練習"
+
+# Success Criteria
+success_criteria:
+  - "PRが正常に作成される"
+  - "CIが成功する"
+  - "Slack投稿が成功する"
+  - "進捗が正しく記録される"
+  - "開始時刻・終了時刻・所要時間が正しく記録される"
+  - "エラーが発生しない"
+
+# Monitoring and Reporting
+monitoring:
+  progress_tracking:
+    format: "{PROGRESS_FORMAT}"  # 例: "TSV"
+    fields:
+      - "service"
+      - "environment"
+      - "status"
+      - "dev_pr"
+      - "prod_pr"
+      - "memo"
+
+# Customization Guide
+customization_guide:
+  required_placeholders:
+    - "{WORKFLOW_NAME}: ワークフロー名"
+    - "{ENVIRONMENT}: 対象環境"
+    - "{BASE_PATH}: ベースパス"
+    - "{SCRIPT_PATH}: スクリプトパス"
+    - "{MODULE_FILE}: モジュールファイル名"
+  
+  customization_tips:
+    - "プロジェクト固有の設定に合わせて調整"
+    - "セキュリティ要件を確認"
+    - "チームの作業フローに合わせてカスタマイズ"
