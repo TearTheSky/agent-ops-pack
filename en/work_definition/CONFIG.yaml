@@ -1,0 +1,32 @@
+# Desired Operation
+- Overview: (Example) Terraform module version upgrade
+- Tasks:
+  - Target Confirmation:
+    - Microservice name
+    - Environment
+    - Module usage status
+    - Module version
+  - Preparation
+    - Pre-communication
+      - Slack notification
+    - Tool preparation
+      - Tool download
+      - Basic configuration
+      - Environment variables
+    - Start recording
+  - Version upgrade work
+    - Tool-based updates
+    - AI file modifications
+    - Pull request creation
+  - Review request
+    - Slack notification
+  - Post-merge work
+    - CI success confirmation
+      - On failure
+        - Troubleshooting
+        - Recovery work notification
+  - Record update work
+    - Slack notification
+    - AI management record updates
+    - Issue tracker posting
+    - Others
