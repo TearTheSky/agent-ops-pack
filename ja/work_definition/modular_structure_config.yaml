@@ -30,11 +30,12 @@ modular_task_architecture:
         - "deployment_execution.yaml"
         
     error_handling:
-      description: "エラー発生時の対処手順"
+      description: "エラー発生時の対処手順（専用ディレクトリ: error_handling/）"
+      directory: "error_handling/"
       examples:
         - "provider_version_conflict.yaml"
-        - "ci_failure_recovery.yaml"
-        - "authentication_issues.yaml"
+        - "ci_authentication_failure.yaml"
+        - "terraform_state_lock.yaml"
         
     evidence_generation:
       description: "作業証跡の生成と記録"
