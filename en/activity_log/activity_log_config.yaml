@@ -1,0 +1,88 @@
+# ------------------------------------------------------------
+# Activity Log Configuration Definition
+# ------------------------------------------------------------
+activity_log_config:
+  name: "Activity Log Configuration"
+  description: "AI partner's activity log settings - work logs, learning records, growth trajectory"
+  # Please update this file as needed
+  
+  file_management:
+    # Enable/disable daily file splitting
+    daily_file_splitting: true
+    # File naming pattern (format and extension determined by human instructions)
+    file_naming_pattern: "{YYYY-MM-DD}_activity_log.csv"
+    # Archive old files
+    suggest_archive_old_files: true
+    # Number of files to keep (latest N files)
+    max_files_to_keep: 30
+    
+    # Specify storage location
+    base_directory: "activity_log/files/"
+    directory_structure: "Daily file management"
+    
+    # Specify recording method
+    recording_method: "write_tool_or_search_replace_tool"
+    recording_timing: "Add record upon completion of 1 task"
+    
+    # Specific examples of file operations
+    operation_examples:
+      new_file: "Create new with write tool"
+      append_record: "Append to existing file with search_replace tool"
+      
+  # Working result for AI agent own - AI agent's own work result records
+  working_result_for_ai_agent_own:
+    format: "CSV"
+    fields:
+      - "service"          # Service name
+      - "environment"      # Environment
+      - "status"           # Status
+      - "started_at"       # Start time
+      - "completed_at"     # Completion time
+      - "duration"         # Duration
+      - "issues"           # Issues that occurred
+      - "solutions"        # Applied solutions
+      - "next_steps"       # Next steps
+      - "lessons_learned"  # Lessons learned
+    template: |
+      Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
+      {service},{environment},{status},{started_at},{completed_at},{duration},"{issues}","{solutions}","{next_steps}","{lessons_learned}"
+    example: |
+      Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
+      example-service,development,INPROGRESS,2025-01-21T10:30:00+09:00,,,"Git branch conflict occurred","Deleted existing branch and created new one","Wait for CI completion; Post Slack notification","Always check existing branches before creating new ones"
+    
+    # Multiple tasks recording example (Important: 1 record per task completion)
+    multiple_tasks_example: |
+      # Day 1: Task 1 completed (2025-01-21_activity_log.csv)
+      Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
+      service-A,production,INPROGRESS,2025-01-21T10:00:00+09:00,,,"Complex dependencies","Changed to staged approach","Will do task 2 and 3 tomorrow","Pre-investigation important for complex work"
+      
+      # Day 2: Task 2 and 3 completed (2025-01-22_activity_log.csv) - Separate file
+      Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
+      service-A,production,INPROGRESS,2025-01-22T09:00:00+09:00,,,"CI failure","Fixed config and re-run","Will do task 3 to complete service-A","CI config pre-check needed"
+      service-A,production,DONE,2025-01-22T11:00:00+09:00,2025-01-22T12:00:00+09:00,1h,"Permission error","Applied for access permission","service-A work completed, retrospective scheduled","Permission check required before work starts"
+
+# Specific Implementation Guide for AI Agents
+ai_agent_implementation_guide:
+  step0: "Essential pre-logging check: Confirm current date and determine {YYYY-MM-DD} format filename"
+  step1: "Check existence of activity_log/files/{YYYY-MM-DD}_activity_log.csv upon task completion"
+  step2: "Create new file with header if file does not exist"
+  step3: "Append new record if file exists"
+  step4: "Record timestamp in JST"
+  
+  date_awareness_checklist:
+    - "What is the current date?"
+    - "What was the date of the previous log file?"
+    - "Same date = append, different date = create new file"
+  
+  implementation_example:
+    new_file_creation: |
+      write tool usage example:
+      - file_path: "activity_log/files/2025-09-25_activity_log.csv"
+      - contents: header row + first record
+    
+    record_append: |
+      search_replace tool usage example:
+      - old_string: last line
+      - new_string: last line + newline + new record
+    
+    timing_format: "YYYY-MM-DDTHH:MM:SS+09:00 (JST)"
