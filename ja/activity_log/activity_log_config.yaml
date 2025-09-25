@@ -1,23 +1,23 @@
 # ------------------------------------------------------------
-# Progress Tracking Configuration Definition
+# Activity Log Configuration Definition
 # ------------------------------------------------------------
-progress_tracking_config:
-  name: "Progress Tracking Configuration"
-  description: "Three purpose-specific settings for progress recording"
+activity_log_config:
+  name: "Activity Log Configuration"
+  description: "メイちゃんの活動記録設定 - 作業ログ・学習記録・成長の軌跡"
   # Please update this file as needed
   
   file_management:
     # Enable/disable daily file splitting
     daily_file_splitting: true
     # File naming pattern (format and extension determined by human instructions)
-    file_naming_pattern: "{YYYY-MM-DD}_work_log.*"
+    file_naming_pattern: "{YYYY-MM-DD}_activity_log.*"
     # Archive old files
     suggest_archive_old_files: true
     # Number of files to keep (latest N files)
     max_files_to_keep: 30
     
     # 保存場所の明示
-    base_directory: "progress_tracking/files/"
+    base_directory: "activity_log/files/"
     directory_structure: "日付別ファイル管理"
     
     # 記録方法の明示
@@ -49,18 +49,35 @@ progress_tracking_config:
     example: |
       Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
       example-service,development,INPROGRESS,2025-01-21 10:30:00,,,"Git branch conflict occurred","Deleted existing branch and created new one","Wait for CI completion; Post Slack notification","Always check existing branches before creating new ones"
+    
+    # 複数タスクの記録例（重要：1タスク完了時に1レコード追加）
+    multiple_tasks_example: |
+      # 1日目：作業1完了 (2025-01-21_activity_log.csv)
+      Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
+      service-A,production,INPROGRESS,2025-01-21T10:00:00+09:00,2025-01-21T11:30:00+09:00,1時間30分,"依存関係が複雑","段階的アプローチに変更","明日作業2と作業3を実施","複雑な作業は事前調査が重要"
+      
+      # 2日目：作業2と作業3完了 (2025-01-22_activity_log.csv) - 別ファイル
+      Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
+      service-A,production,INPROGRESS,2025-01-22T09:00:00+09:00,2025-01-22T10:30:00+09:00,1時間30分,"CI失敗","設定修正して再実行","作業3を実施してservice-A完了予定","CI設定は事前確認が必要"
+      service-A,production,DONE,2025-01-22T11:00:00+09:00,2025-01-22T12:00:00+09:00,1時間,"権限エラー","アクセス権限申請で解決","service-A作業完了、振り返り実施予定","権限確認は作業開始前に必須"
 
 # AI Agent向けの具体的な実装ガイド
 ai_agent_implementation_guide:
-  step1: "タスク完了時に progress_tracking/files/{YYYY-MM-DD}_work_log.csv の存在確認"
+  step0: "ログ記録前の必須チェック：現在の日付を確認し、{YYYY-MM-DD}形式のファイル名を決定"
+  step1: "タスク完了時に activity_log/files/{YYYY-MM-DD}_activity_log.csv の存在確認"
   step2: "ファイルが存在しない場合はヘッダー付きで新規作成"
   step3: "ファイルが存在する場合は新しいレコードを追記"
   step4: "JST時刻でタイムスタンプを記録"
   
+  date_awareness_checklist:
+    - "現在の日付は？"
+    - "前回のログファイルの日付は？"
+    - "同じ日なら追記、違う日なら新ファイル作成"
+  
   implementation_example:
     new_file_creation: |
       write tool使用例:
-      - file_path: "progress_tracking/files/2025-09-25_work_log.csv"
+      - file_path: "activity_log/files/2025-09-25_activity_log.csv"
       - contents: ヘッダー行 + 最初のレコード
     
     record_append: |

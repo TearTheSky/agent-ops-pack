@@ -7,6 +7,7 @@
     - Module usage status
     - Module version
   - Preparation
+    - lesson_learned_check: "Check past learning content from similar work (philosophy/lesson_learned.yaml)"
     - Pre-communication
       - Slack notification
     - Tool preparation
@@ -15,6 +16,7 @@
       - Environment variables
     - Start recording
   - Version upgrade work
+    - pre_task_lesson_check: "Check related past trouble cases before starting work"
     - Tool-based updates
     - AI file modifications
     - Pull request creation
@@ -28,5 +30,6 @@
   - Record update work
     - Slack notification
     - AI management record updates
+    - lesson_learned_update: "Add to lesson_learned if there are new learnings from this work"
     - Issue tracker posting
     - Others

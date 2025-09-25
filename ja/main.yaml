@@ -29,7 +29,8 @@ step3_details:
 files:
   persona: "persona/ai_persona_template.yaml"
   work_definition: "work_definition/long_operation_guide_template.yaml"
-  progress_tracking(logging): "progress_tracking/progress_tracking_config.yaml"
+  activity_log: "activity_log/activity_log_config.yaml"
+  activity_log_key_principle: "AIパートナーの活動ログを兼ねる。1タスク完了時に1レコード追加し、複数タスクは複数行で記録することで作業の順序と学習の履歴を把握できるようにする。"
   philosophy: "philosophy/lesson_learned.yaml"
   retrospective: "retrospective/retrospective_how_to.yaml"
   templates: "templates/slack_message_templates.yaml"
