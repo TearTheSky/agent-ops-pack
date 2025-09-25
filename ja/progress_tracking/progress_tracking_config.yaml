@@ -1,123 +1,72 @@
 # ------------------------------------------------------------
-# 進捗記録の設定定義
+# Progress Tracking Configuration Definition
 # ------------------------------------------------------------
 progress_tracking_config:
-  name: "進捗追跡設定"
-  description: "進捗記録の3つの用途別設定"
-  # 必要に応じて、このファイルを更新してください
+  name: "Progress Tracking Configuration"
+  description: "Three purpose-specific settings for progress recording"
+  # Please update this file as needed
   
   file_management:
-    # 日別ファイル分割の有効/無効
+    # Enable/disable daily file splitting
     daily_file_splitting: true
-    # ファイル命名パターン(書式と拡張子は人間の指示に従って決める)
-    file_naming_pattern: "{project_name}_results_{YYYY-MM-DD}.tsv"
-    # 古いファイルのアーカイブ
+    # File naming pattern (format and extension determined by human instructions)
+    file_naming_pattern: "{YYYY-MM-DD}_work_log.*"
+    # Archive old files
     suggest_archive_old_files: true
-    # 保持するファイル数（最新のN個）
+    # Number of files to keep (latest N files)
     max_files_to_keep: 30
-    # JST日時形式の標準化
-    datetime_format: "JST (UTC+9) - YYYY-MM-DDTHH:MM:SS+09:00"
-    # 時系列順序の重要性
-    chronological_order: true
-
-  # Records for SpreadSheet - スプレッドシート用の記録
-  records_for_spreadsheet:
-    format: "TSV"
-    fields:
-      - "DateTime"     # JST形式のタイムスタンプ（時系列順序用）
-      - "ServiceName"  # サービス名
-      - "Environment" # 環境
-      - "Status"      # ステータス (PENDING/INPROGRESS/DONE/ERROR/BLOCKED/READY)
-      - "DevPR"       # 開発PR
-      - "ProdPR"      # 本番PR
-      - "Notes"       # 詳細メモ・進捗・課題追跡
-    template: "{DateTime}	{ServiceName}	{Environment}	{Status}	{DevPR}	{ProdPR}	{Notes}"
-    example: "2025-09-11T16:32:28+09:00	example-service	development	INPROGRESS	https://github.com/org/repo/pull/12345		CI success, waiting for review"
-    status_values:
-      - "PENDING: 未開始"
-      - "INPROGRESS: 作業中"
-      - "DONE: 完了"
-      - "ERROR: エラー発生"
-      - "BLOCKED: ブロック中"
-      - "READY: 準備完了"
-  
-  # Working result for AI agent own - AIエージェント自身の作業結果記録
+    
+    # 保存場所の明示
+    base_directory: "progress_tracking/files/"
+    directory_structure: "日付別ファイル管理"
+    
+    # 記録方法の明示
+    recording_method: "write_tool_or_search_replace_tool"
+    recording_timing: "1タスク完了時にレコード追加"
+    
+    # ファイル操作の具体例
+    operation_examples:
+      new_file: "write toolで新規作成"
+      append_record: "search_replace toolで既存ファイルに追記"  
+  # Working result for AI agent own - AI agent's own work result records
   working_result_for_ai_agent_own:
     format: "CSV"
     fields:
-      - "service"        # サービス名
-      - "environment"    # 環境
-      - "status"         # ステータス
-      - "started_at"     # 開始時刻
-      - "completed_at"   # 完了時刻
-      - "duration"       # 所要時間
-      - "issues"         # 発生した問題
-      - "solutions"      # 適用した解決策
-      - "next_steps"     # 次のステップ
-      - "lessons_learned" # 学んだこと
+      - "service"          # Service name
+      - "environment"      # Environment
+      - "status"           # Status
+      - "started_at"       # Start time
+      - "completed_at"     # Completion time
+      - "duration"         # Duration
+      - "issues"           # Issues that occurred
+      - "solutions"        # Applied solutions
+      - "next_steps"       # Next steps
+      - "lessons_learned"  # Lessons learned
     template: |
       Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
+      {service},{environment},{status},{started_at},{completed_at},{duration},"{issues}","{solutions}","{next_steps}","{lessons_learned}"
       {service},{environment},{status},{started_at},{completed_at},{duration},"{issues}","{solutions}","{next_steps}","{lessons_learned}"
     example: |
       Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
       example-service,development,INPROGRESS,2025-01-21 10:30:00,,,"Git branch conflict occurred","Deleted existing branch and created new one","Wait for CI completion; Post Slack notification","Always check existing branches before creating new ones"
+
+# AI Agent向けの具体的な実装ガイド
+ai_agent_implementation_guide:
+  step1: "タスク完了時に progress_tracking/files/{YYYY-MM-DD}_work_log.csv の存在確認"
+  step2: "ファイルが存在しない場合はヘッダー付きで新規作成"
+  step3: "ファイルが存在する場合は新しいレコードを追記"
+  step4: "JST時刻でタイムスタンプを記録"
   
-  # Evidence Report for Issue Tracker - 課題管理ツール用のエビデンス報告
-  evidence_report_for_issue_tracker:
-    format: "Markdown"
-    fields:
-      - "service"        # サービス名
-      - "environment"    # 環境
-      - "operation"      # 作業内容
-      - "status"         # 結果
-      - "pr_url"         # PR URL
-      - "ci_result"      # CI結果
-      - "slack_status"   # Slack投稿状況
-      - "start_time"     # 開始時刻
-      - "end_time"       # 終了時刻
-      - "duration"       # 所要時間
-      - "notes"          # 特記事項
-    template: |
-      ## 作業完了報告
-      
-      ### 対象
-      - **マイクロサービス**: {service}
-      - **環境**: {environment}
-      - **作業内容**: {operation}
-      
-      ### 実行結果
-      - **ステータス**: {status}
-      - **PR URL**: {pr_url}
-      - **CI結果**: {ci_result}
-      - **Slack投稿**: {slack_status}
-      
-      ### 実行時間
-      - **開始時刻**: {start_time}
-      - **完了時刻**: {end_time}
-      - **所要時間**: {duration}
-      
-      ### 特記事項
-      {notes}
-    example: |
-      ## 作業完了報告
-      
-      ### 対象
-      - **マイクロサービス**: example-service
-      - **環境**: development
-      - **作業内容**: サービスのバージョンアップ
-      
-      ### 実行結果
-      - **ステータス**: INPROGRESS
-      - **PR URL**: https://github.com/your_org/your_repo/pull/12345
-      - **CI結果**: CI success, waiting for review
-      - **Slack投稿**: Sent
-      
-      ### 実行時間
-      - **開始時刻**: 2025-01-21 10:30:00
-      - **完了時刻**: 
-      - **所要時間**: 
-      
-      ### 特記事項
-      - Git branch conflict occurred and resolved
-      - CI is currently running
-      - Slack notification sent successfully
+  implementation_example:
+    new_file_creation: |
+      write tool使用例:
+      - file_path: "progress_tracking/files/2025-09-25_work_log.csv"
+      - contents: ヘッダー行 + 最初のレコード
+    
+    record_append: |
+      search_replace tool使用例:
+      - old_string: 最後の行
+      - new_string: 最後の行 + 改行 + 新しいレコード
+    
+    timing_format: "YYYY-MM-DDTHH:MM:SS+09:00 (JST)"
+  
