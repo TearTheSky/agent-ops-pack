@@ -54,11 +54,11 @@ activity_log_config:
     multiple_tasks_example: |
       # Day 1: Task 1 completed (2025-01-21_activity_log.csv)
       Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
-      service-A,production,INPROGRESS,2025-01-21T10:00:00+09:00,,1h30m,"Complex dependencies","Changed to staged approach","Will do task 2 and 3 tomorrow","Pre-investigation important for complex work"
+      service-A,production,INPROGRESS,2025-01-21T10:00:00+09:00,,,"Complex dependencies","Changed to staged approach","Will do task 2 and 3 tomorrow","Pre-investigation important for complex work"
       
       # Day 2: Task 2 and 3 completed (2025-01-22_activity_log.csv) - Separate file
       Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
-      service-A,production,INPROGRESS,2025-01-22T09:00:00+09:00,,1h30m,"CI failure","Fixed config and re-run","Will do task 3 to complete service-A","CI config pre-check needed"
+      service-A,production,INPROGRESS,2025-01-22T09:00:00+09:00,,,"CI failure","Fixed config and re-run","Will do task 3 to complete service-A","CI config pre-check needed"
       service-A,production,DONE,2025-01-22T11:00:00+09:00,2025-01-22T12:00:00+09:00,1h,"Permission error","Applied for access permission","service-A work completed, retrospective scheduled","Permission check required before work starts"
 
 # Specific Implementation Guide for AI Agents
