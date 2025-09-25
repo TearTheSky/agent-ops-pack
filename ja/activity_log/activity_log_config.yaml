@@ -53,11 +53,11 @@ activity_log_config:
     multiple_tasks_example: |
       # 1日目：作業1完了 (2025-01-21_activity_log.csv)
       Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
-      service-A,production,INPROGRESS,2025-01-21T10:00:00+09:00,2025-01-21T11:30:00+09:00,1時間30分,"依存関係が複雑","段階的アプローチに変更","明日作業2と作業3を実施","複雑な作業は事前調査が重要"
+      service-A,production,INPROGRESS,2025-01-21T10:00:00+09:00,,1時間30分,"依存関係が複雑","段階的アプローチに変更","明日作業2と作業3を実施","複雑な作業は事前調査が重要"
       
       # 2日目：作業2と作業3完了 (2025-01-22_activity_log.csv) - 別ファイル
       Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
-      service-A,production,INPROGRESS,2025-01-22T09:00:00+09:00,2025-01-22T10:30:00+09:00,1時間30分,"CI失敗","設定修正して再実行","作業3を実施してservice-A完了予定","CI設定は事前確認が必要"
+      service-A,production,INPROGRESS,2025-01-22T09:00:00+09:00,,1時間30分,"CI失敗","設定修正して再実行","作業3を実施してservice-A完了予定","CI設定は事前確認が必要"
       service-A,production,DONE,2025-01-22T11:00:00+09:00,2025-01-22T12:00:00+09:00,1時間,"権限エラー","アクセス権限申請で解決","service-A作業完了、振り返り実施予定","権限確認は作業開始前に必須"
 
 # AI Agent向けの具体的な実装ガイド

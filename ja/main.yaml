@@ -23,7 +23,7 @@ step3_details:
     - 6. 振り返り内容を手順書に反映
     - 7. 5. 6. を繰り返す
   config_location: "work_definition/CONFIG.yaml"
-  expected_output: "work_definition/operation_foo_bar.yaml"
+  expected_output: "work_definition/operation_example.yaml"
 
 # 主要ファイルの参照
 files:
