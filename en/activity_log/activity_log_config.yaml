@@ -46,7 +46,6 @@ activity_log_config:
     template: |
       Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
       {service},{environment},{status},{started_at},{completed_at},{duration},"{issues}","{solutions}","{next_steps}","{lessons_learned}"
-      {service},{environment},{status},{started_at},{completed_at},{duration},"{issues}","{solutions}","{next_steps}","{lessons_learned}"
     example: |
       Service,Environment,Status,Started At,Completed At,Duration,Issues,Solutions,Next Steps,Lessons Learned
       example-service,development,INPROGRESS,2025-01-21 10:30:00,,,"Git branch conflict occurred","Deleted existing branch and created new one","Wait for CI completion; Post Slack notification","Always check existing branches before creating new ones"
