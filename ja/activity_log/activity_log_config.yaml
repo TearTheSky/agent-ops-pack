@@ -10,7 +10,7 @@ activity_log_config:
     # Enable/disable daily file splitting
     daily_file_splitting: true
     # File naming pattern (format and extension determined by human instructions)
-    file_naming_pattern: "{YYYY-MM-DD}_activity_log.*"
+    file_naming_pattern: "{YYYY-MM-DD}_activity_log.csv"
     # Archive old files
     suggest_archive_old_files: true
     # Number of files to keep (latest N files)

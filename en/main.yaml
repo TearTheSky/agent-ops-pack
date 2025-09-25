@@ -23,7 +23,7 @@ step3_details:
     - 6. Reflect retrospective content in procedures
     - 7. Repeat 5. and 6.
   config_location: "work_definition/CONFIG.yaml"
-  expected_output: "work_definition/operation_example.yaml"
+  expected_output: "work_definition/operation_guide.yaml"
 
 # Main File References
 files:
