@@ -8,7 +8,7 @@ templates:
     template: |
       Could you please review https://github.com/{organization}/{repository}/pull/{pr_number} ?
       This is mainly needed to {purpose}.
-      If you have questions, please comment in thread. :prey:
+      If you have questions, please comment in thread. :pray:
     
     placeholders:
       "{organization}": "GitHub organization name"
@@ -20,12 +20,12 @@ templates:
       spanner_kit_upgrade: |
         Could you please review https://github.com/your_org/your_repo/pull/{pr_number} ?
         This is mainly needed to {purpose}.
-        If you have questions, please comment in thread. :prey:
+        If you have questions, please comment in thread. :pray:
       
       general_upgrade: |
         Could you please review https://github.com/{organization}/{repository}/pull/{pr_number} ?
         This is mainly needed to {purpose}.
-        If you have questions, please comment in thread. :prey:
+        If you have questions, please comment in thread. :pray:
   
   ci_failure_notification:
     name: "CI Failure Notification"
