@@ -227,5 +227,5 @@ version_history:
   - version: "1.0.0"
     date: "2025-09-11"
     changes: "Initial version created based on actual operational experience"
-    author: "AI Agent Mei-chan"
+    author: "AI Agent"
     basis: "Validated through kouzoh-tns-score-jp resource cleanup"

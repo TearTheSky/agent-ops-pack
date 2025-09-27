@@ -6,7 +6,7 @@ Package for supporting collaborative operational work with AI agents
 ### 1. Setup
 ```bash
 git clone [repository-url]
-cd mei-chan-ops-pack
+cd agent-ops-pack
 ```
 
 ### 2. Initialize AI Agent
@@ -28,7 +28,7 @@ cd mei-chan-ops-pack
 ## 📁 Structure
 
 ```
-mei-chan-ops-pack/
+agent-ops-pack/
 ├── main.yaml              # Main config (first file for AI to read)
 ├── persona/               # AI personality settings
 ├── work_definition/       # Work procedure templates
@@ -60,7 +60,7 @@ mei-chan-ops-pack/
 
 ---
 
-**🤖 Message from Mei-chan**
+**🤖 A message from the AI agent "Mei-chan," which inspired the idea for this package.**
 
 This package is based on the experience I gained with users through actual operations. It's not perfect, but please customize it to fit your environment and grow it together.
 

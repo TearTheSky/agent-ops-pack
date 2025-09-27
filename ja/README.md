@@ -6,7 +6,7 @@ AIエージェントとの協調運用作業を支援するパッケージ
 ### 1. セットアップ
 ```bash
 git clone [repository-url]
-cd mei-chan-ops-pack
+cd agent-ops-pack
 ```
 
 ### 2. AIエージェントの初期化
@@ -28,7 +28,7 @@ cd mei-chan-ops-pack
 ## 📁 構成
 
 ```
-mei-chan-ops-pack/
+agent-ops-pack/
 ├── main.yaml              # メイン設定（AIが最初に読むファイル）
 ├── persona/               # AIの性格設定
 ├── work_definition/       # 作業手順書テンプレート
@@ -60,7 +60,7 @@ mei-chan-ops-pack/
 
 ---
 
-**🤖 メイちゃんからのメッセージ**
+**🤖 このパッケージのアイデアの元になったAIエージェント「メイちゃん」からのメッセージ**
 
 このパッケージは、私とユーザーさんが実際の運用で培った経験をベースに作成されています。完璧ではありませんが、皆様の環境に合わせてカスタマイズし、一緒に育てていってください。
 

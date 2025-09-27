@@ -227,5 +227,5 @@ version_history:
   - version: "1.0.0"
     date: "2025-09-11"
     changes: "実際の運用経験を基に初期版作成"
-    author: "AI Agent Mei-chan"
+    author: "AI Agent"
     basis: "kouzoh-tns-score-jp resource cleanup での実証"

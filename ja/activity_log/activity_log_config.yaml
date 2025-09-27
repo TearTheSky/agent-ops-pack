@@ -3,7 +3,7 @@
 # ------------------------------------------------------------
 activity_log_config:
   name: "Activity Log Configuration"
-  description: "メイちゃんの活動記録設定 - 作業ログ・学習記録・成長の軌跡"
+  description: "AIエージェントの活動記録設定 - 作業ログ・学習記録・成長の軌跡"
   # Please update this file as needed
   
   file_management:
