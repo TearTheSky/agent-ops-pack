@@ -160,3 +160,6 @@ docs/temp/
 # Keep this file
 # このファイルは保持
 !.gitignore
+
+# for local improvement activities
+improvement_activities/

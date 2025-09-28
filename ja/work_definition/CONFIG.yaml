@@ -1,6 +1,11 @@
+- グローバル変数:
+  - repo_root: /Users/foobar/repos
+  - logging_config: "activity_log/activity_log_config.yaml"
+  - environment_config: "environment/system_environment.yaml"
+
 # やりたいオペレーション
-- 概要：(例)terraformのモジュールのバージョンアップ
-- タスク：
+- 概要:(例)terraformのモジュールのバージョンアップ
+- タスク:
   - 対象の確認:
     - マイクロサービス名
     - 環境
