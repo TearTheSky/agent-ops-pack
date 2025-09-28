@@ -1,0 +1,13 @@
+# System Environment Guidelines
+# システム環境ガイドライン
+
+system_environment:
+  development:
+    - Development Environment
+    - Speed Priority
+  staging:
+    - Staging Environment
+    - Stability Priority
+  production:
+    - Production Environment
+    - Stability Priority

@@ -1,3 +1,8 @@
+# Global Variables:
+  - repo_root: /Users/foobar/repos
+  - logging_config: "activity_log/activity_log_config.yaml"
+  - environment_config: "environment/system_environment.yaml"
+
 # Desired Operation
 - Overview: (Example) Terraform module version upgrade
 - Tasks:

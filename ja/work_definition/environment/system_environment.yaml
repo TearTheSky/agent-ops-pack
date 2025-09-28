@@ -1,0 +1,13 @@
+# System Environment Guidelines
+# システム環境ガイドライン
+
+system_environment:
+  development:
+    - 開発環境
+    - 速度重視
+  staging:
+    - ステージング環境
+    - 安定性重視
+  production:
+    - 本番環境
+    - 安定性重視

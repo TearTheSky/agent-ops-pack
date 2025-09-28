@@ -18,12 +18,29 @@ cd agent-ops-pack
 1. Modify `work_definition/CONFIG.yaml` (describe work overview)
 2. Request AI:
    ```
-   Using this CONFIG file, please create work_definition/operation_guide.yaml.
-   Reference long_operation_guide_template.yaml to create an executable work procedure.
+   Using this CONFIG, please create AI agent procedures by utilizing all available reference documents.
+   Please extract components into subtasks and organize them in a modular structure with separate files.
+   Then, referring to environment/system_environment.yaml, please copy the main procedure for each environment.
+   There are no environment differences at this stage. Please discover and add them through future dialogue with me.
+   
+   After completing all work, please verify the file path consistency within each document and make corrections if necessary.
    ```
 
-### 4. Execute & Improve Cycle
-- Test in development → Retrospective → Improve procedures → Apply to production
+### 4. Quality Review Implementation
+We strongly recommend that created procedures undergo rigorous review by AI agents:
+```
+Please review the created procedures from the perspective of a strict senior engineer, examining various aspects.
+However, this is not a review of application source code. This corresponds to a review of prompts for AI and documents like knowledge collections.
+```
+
+**Review Value:**
+- ✅ **Identify Implementation Gaps**: Detect critical issues like hardcoded paths, reference errors
+- ✅ **Security Vulnerability Detection**: Improper environment variable handling, injection attack risks
+- ✅ **Maintainability Improvement**: Modular design improvements, systematic error handling
+- ✅ **Practical Assurance**: Quality improvement to safely executable level in production
+
+### 5. Execute & Improve Cycle
+- Test in development → **Quality Review** → Improve procedures → Apply to production
 
 ## 📁 Structure
 
