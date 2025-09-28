@@ -20,8 +20,10 @@ cd agent-ops-pack
    ```
    Using this CONFIG, please create AI agent procedures by utilizing all available reference documents.
    Please extract components into subtasks and organize them in a modular structure with separate files.
+   
    Then, referring to environment/system_environment.yaml, please copy the main procedure for each environment.
-   There are no environment differences at this stage. Please discover and add them through future dialogue with me.
+   Environment-specific settings (especially safety measures) should be managed globally as centralized settings to avoid duplication.
+   Other environment differences do not exist at this stage. Please discover and add them through future dialogue with me.
    
    After completing all work, please verify the file path consistency within each document and make corrections if necessary.
    ```
@@ -31,6 +33,8 @@ We strongly recommend that created procedures undergo rigorous review by AI agen
 ```
 Please review the created procedures from the perspective of a strict senior engineer, examining various aspects.
 However, this is not a review of application source code. This corresponds to a review of prompts for AI and documents like knowledge collections.
+Evaluate them as "living documents that grow" rather than "finished products."
+Abstract descriptions should also be evaluated as appropriate if they are intentional design (to be resolved through dialogue when actual problems occur and then reflected in the documents).
 ```
 
 **Review Value:**
