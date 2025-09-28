@@ -18,14 +18,27 @@ cd agent-ops-pack
 1. Modify `work_definition/CONFIG.yaml` (describe work overview)
 2. Request AI:
    ```
+   (Attach the modified CONFIG.yaml as reference material)
    Using this CONFIG, please create AI agent procedures by utilizing all available reference documents.
-   Please extract components into subtasks and organize them in a modular structure with separate files.
-   
-   Then, referring to environment/system_environment.yaml, please copy the main procedure for each environment.
-   Environment-specific settings (especially safety measures) should be managed globally as centralized settings to avoid duplication.
-   Other environment differences do not exist at this stage. Please discover and add them through future dialogue with me.
-   
-   After completing all work, please verify the file path consistency within each document and make corrections if necessary.
+
+   【Important Constraints】
+   - Do not reference non-existent files (fictional file names are prohibited)
+   - Record unimplemented features as manual tasks
+   - Prioritize practical procedures over incomplete but perfect ones
+   - Clearly mark areas where AI judgment is uncertain as human confirmation points
+
+   【Structuring Policy】
+   - Extract components into subtasks and organize them in a modular structure
+   - However, only reference files that are actually created
+
+   【Environment-specific Handling】
+   - Create environment-specific procedures referring to environment/system_environment.yaml
+   - Manage environment-specific settings globally to avoid duplication
+   - Record currently unknown environment differences as "to be discovered and added through future dialogue"
+
+   【Quality Assurance】
+   - Finally verify and correct file path consistency
+   - Delete non-existent references or convert them to manual tasks
    ```
 
 ### 4. Quality Review Implementation
