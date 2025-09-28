@@ -5,7 +5,16 @@
 
 # Desired Operation
 - Overview: (Example) Terraform module version upgrade
-- Tasks:
+- Notes: Generalized learnings from spanner-kit v0.8.0 version upgrade reflected
+- Structure: Improved manageability and safety through modular design (Main Task + Sub Tasks)
+
+# CONFIG Customization Guide
+# 1. Modify global variables to match your environment
+# 2. Add required environment variables to "Environment Variable Pre-check"
+# 3. Record specific output examples in "Runtime Verification Points"
+# 4. Add activity_log recording for each step
+# 5. Recommended to split complex work into "Main Task + Sub Tasks"
+- Main Task: "Main Task (Example: Module Version Upgrade PR Creation)"
   - Target Confirmation:
     - Microservice name
     - Environment
@@ -13,6 +22,10 @@
     - Module version
   - Preparation
     - lesson_learned_check: "Check past learning content from similar work (philosophy/lesson_learned.yaml)"
+    - Environment Variable Pre-check
+      - Verify that required environment variables are set
+      - Examples: SLACK_BOT_TOKEN, API_KEY, GCP_PROJECT_ID, etc.
+      - Verification command example: echo "TOKEN: ${TOKEN:0:10}..."
     - Pre-communication
       - Slack notification
     - Tool preparation
@@ -25,6 +38,11 @@
     - Tool-based updates
     - AI file modifications
     - Pull request creation
+  - Runtime Verification Points
+    - Script/tool startup display verification
+    - Progress verification at major processing steps
+    - Completion success message verification
+    - Clear display during error occurrence
   - Review request
     - Slack notification
   - Post-merge work
@@ -36,5 +54,29 @@
     - Slack notification
     - AI management record updates
     - lesson_learned_update: "Add to lesson_learned if there are new learnings from this work"
+    - activity_log recording: "Add log according to activity_log/activity_log_config.yaml after completing this task"
     - Issue tracker posting
     - Others
+
+- Sub Task 1: "Review Request Posting"
+  - Work: "Post review request for created PR to Slack"
+  - Preparation:
+    - Verify PR URL created in main task
+    - Identify target posting channel
+    - Environment variable pre-check (if needed)
+  - Notes:
+    - Maintain message template consistency
+  - Result Recording:
+    - Add log according to activity_log/activity_log_config.yaml after completing this sub task
+
+- Sub Task 2: "Cleanup Work"
+  - Work: "Delete unnecessary resources/files after version upgrade"
+  - Preparation:
+    - Verify main task completion
+    - Identify resources targeted for deletion
+    - Verify backup availability
+  - Notes:
+    - Thorough safety verification before deletion
+    - Consider dependency impact
+  - Result Recording:
+    - Add log according to activity_log/activity_log_config.yaml after completing this sub task

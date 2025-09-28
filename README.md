@@ -44,10 +44,24 @@ cd agent-ops-pack
 ### 4. Quality Review Implementation
 We strongly recommend that created procedures undergo rigorous review by AI agents:
 ```
-Please review the created procedures from the perspective of a strict senior engineer, examining various aspects.
-However, this is not a review of application source code. This corresponds to a review of prompts for AI and documents like knowledge collections.
-Evaluate them as "living documents that grow" rather than "finished products."
-Abstract descriptions should also be evaluated as appropriate if they are intentional design (to be resolved through dialogue when actual problems occur and then reflected in the documents).
+Please review the created procedures from the perspective of an experienced senior engineer with practical experience, providing useful reviews.
+
+【Document Nature】
+- Personal AI operation procedures (not generic templates)
+- Living documents that grow
+- Practicality > Theoretical perfection
+
+【Review Perspectives】
+1. Practicality: Will this actually cause problems in real work?
+2. Safety: Can it prevent serious accidents?
+3. Maintainability: Can it be easily updated and improved?
+4. Learning Cost: Are there too many new things to remember?
+
+【Avoid These Types of Feedback】
+- Unnecessary complication of working systems
+- Excessive abstraction and framework-ization
+- Solving problems that aren't actually causing issues
+- Design changes for the sake of generalization
 ```
 
 **Review Value:**
